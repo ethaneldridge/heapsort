@@ -1,0 +1,65 @@
+public class HeapsortDemo {
+  
+  public static void main(String... args) {
+    Heap maxHeap = new Heap(new int[]{42, 22, 16, 34, 99, 3});
+    maxHeap.display();
+    maxHeap.heapify();
+    maxHeap.display();
+    maxHeap.sort();
+    maxHeap.display();
+  }
+}
+
+class Heap {
+  
+  Heap(int[] myArray) {
+    this.myArray = myArray;
+  }
+  
+  void heapify() {
+    for (int i = myArray.length / 2; i >= 0; i--) {
+	    maxHeapify(myArray, myArray.length, i);
+    }
+  }
+  
+  void maxHeapify(int[] array, int length, int index) {
+    int maxIndex = index;
+    int leftIndex = 2*index + 1;
+    int rightIndex = 2*index + 2;
+    
+    if (leftIndex < length && array[leftIndex] > array[maxIndex]) {
+      maxIndex = leftIndex;
+    }
+    
+    if (rightIndex < length && array[rightIndex] > array[maxIndex]) {
+      maxIndex = rightIndex;
+    }
+    
+    if (maxIndex != index) {
+      swap(array, maxIndex, index);
+      maxHeapify(array, length, maxIndex);
+    }   
+  }
+  
+  void swap(int[] array, int indexA, int indexB) {
+    int temp = array[indexA];
+    array[indexA] = array[indexB];
+    array[indexB] = temp;
+  }
+  
+  void sort() {
+    for (int i = myArray.length - 1; i >=0; i--) {
+      int max = myArray[0];
+      swap(myArray, 0, i);
+      maxHeapify(myArray, i, 0);
+    }
+  }
+  
+  void display() {
+    for (int i = 0; i < myArray.length; i++) {
+      System.out.printf("%d |", myArray[i]);
+    }
+    System.out.println();
+  }
+  private int[] myArray;
+}
